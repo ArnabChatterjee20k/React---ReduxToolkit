@@ -56,6 +56,12 @@ const postsSlice = createSlice({
       const { postId, reaction } = action.payload;
       const existingPost = state.find((post) => post.id === postId);
       if (existingPost) {
+        // first setting the state to initial state then incrementing the value
+        existingPost.reactions = {
+          thumbsUp: 0,
+          wow: 0,
+          heart: 0,
+        }
         existingPost.reactions[reaction]++;
       }
     },
