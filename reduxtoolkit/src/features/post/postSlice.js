@@ -7,12 +7,22 @@ const initialState = [
     date: sub(new Date(), { minutes: 10 }).toISOString(),
     title: "Learning Web Dev",
     content: "Lets learn Redux Toolkit",
+    reactions: {
+      thumbsUp: 0,
+      wow: 0,
+      heart: 0,
+    },
   },
   {
     id: "2",
     date: sub(new Date(), { minutes: 10 }).toISOString(),
     title: "Learning Web Dev",
     content: "Lets learn Redux Toolkit",
+    reactions: {
+      thumbsUp: 0,
+      wow: 0,
+      heart: 0,
+    },
   },
 ];
 
@@ -24,6 +34,7 @@ const postsSlice = createSlice({
       reducer(state, action) {
         state.push(action.payload);
       },
+      // this is the payload which will be going to be used in newPost
       prepare(title, content, userId) {
         return {
           payload: {
@@ -31,15 +42,27 @@ const postsSlice = createSlice({
             title,
             content,
             userId,
-            date : new Date().toISOString()
+            date: new Date().toISOString(),
+            reactions: {
+              thumbsUp: 0,
+              wow: 0,
+              heart: 0,
+            },
           },
         };
       },
+    },
+    reactionAdded(state, action) {
+      const { postId, reaction } = action.payload;
+      const existingPost = state.find((post) => post.id === postId);
+      if (existingPost) {
+        existingPost.reactions[reaction]++;
+      }
     },
   },
 });
 
 // selector functions
 export const selectAllPosts = (state) => state.posts;
-export const { postAdded } = postsSlice.actions;
+export const { postAdded, reactionAdded } = postsSlice.actions;
 export default postsSlice.reducer;
