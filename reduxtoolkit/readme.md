@@ -5,6 +5,10 @@
 
   - All these are stored inside a global store
 
+- synchronous nature -> However, the flow of Redux's state management tasks is completely synchronous: dispatching an action immediately generates the chain of calls to middleware and reducers to carry out the state transition
+
+- A Redux store doesn't know anything about async logic. It only knows how to synchronously dispatch actions, update the state by calling the root reducer function, and notify the UI that something has changed. Any asynchronicity has to happen outside the store
+
 # Why we can mutate state directly? In react we cant mutate state directly but here how?
 
 ReduxToolkit uses immer.js. When we are mutating the state actually immer.js under the hood creating a new state for us. **This happens only inside createSlice**
@@ -40,3 +44,8 @@ postAdded(title, content);
 
 - The above code is generating the payload for us.
 - So when we dispatch our actions we dont have to concerned about the state structure.
+
+# Performing Async Logic with Redux Thunk
+-  By default, Redux’s actions are dispatched synchronously, which is a problem for any non-trivial app that needs to communicate with an external API or perform side effects. Redux also allows for middleware that sits between an action being dispatched and the action reaching the reducers.
+
+- Redux Thunk is a middleware that lets you call action creators that return a function instead of an action object. That function receives the store’s dispatch method, which is then used to dispatch regular synchronous actions inside the function’s body once the asynchronous operations have been completed.
