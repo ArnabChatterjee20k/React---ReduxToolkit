@@ -1,9 +1,14 @@
-# Terminologies
+# ReduxToolkit
+
+## Terminologies
 
 - slice -> slice where we divide our state.
+
   - For example, in a blog post, comment,etc are all slices.
 
   - All these are stored inside a global store
+
+- extraReducers - You would use extraReducers when you are dealing with an action that you have already defined somewhere else. The most common examples are responding to a createAsyncThunk action and responding to an action from another slice
 
 - synchronous nature -> However, the flow of Redux's state management tasks is completely synchronous: dispatching an action immediately generates the chain of calls to middleware and reducers to carry out the state transition
 
@@ -45,7 +50,19 @@ postAdded(title, content);
 - The above code is generating the payload for us.
 - So when we dispatch our actions we dont have to concerned about the state structure.
 
-# Performing Async Logic with Redux Thunk
--  By default, Redux’s actions are dispatched synchronously, which is a problem for any non-trivial app that needs to communicate with an external API or perform side effects. Redux also allows for middleware that sits between an action being dispatched and the action reaching the reducers.
+# ReduxThunk with reduxtoolkit
+
+## Terminologies
+
+- thunk - The word "thunk" is a programming term that means "a piece of code that does some delayed work". Rather than execute some logic now, we can write a function body or code that can be used to perform the work later.
+  
+  - For Redux specifically, "thunks" are a pattern of writing functions with logic inside that can interact with a Redux store's dispatch and getState methods.
+
+  - created using createAsyncThunk
+
+
+## Performing Async Logic with Redux Thunk
+
+- By default, Redux’s actions are dispatched synchronously, which is a problem for any non-trivial app that needs to communicate with an external API or perform side effects. Redux also allows for middleware that sits between an action being dispatched and the action reaching the reducers.
 
 - Redux Thunk is a middleware that lets you call action creators that return a function instead of an action object. That function receives the store’s dispatch method, which is then used to dispatch regular synchronous actions inside the function’s body once the asynchronous operations have been completed.
